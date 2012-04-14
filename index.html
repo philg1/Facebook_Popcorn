@@ -1,0 +1,353 @@
+<!DOCTYPE html> 
+<html xmlns:fb="https://www.facebook.com/2008/fbml">
+  <head> 
+    <title> 
+     Echo
+    </title>
+     <script src="http://code.jquery.com/jquery-1.7.1.min.js" ></script>
+     <script src="js/popcorn-complete.js"></script>
+     <link rel="stylesheet" href="css/style.css" />
+     
+     <script>
+     
+     var userid;
+     var firstname;
+     var like1;
+     var status1;
+	var status2;
+	var status3;
+	var status4;
+	var status5;
+
+	document.addEventListener("DOMContentLoaded", function () {
+    var pop = Popcorn("#video");
+    
+     pop.code({
+            start: 5,
+            end: 10,
+            onStart: function( options ) {
+                document.getElementById("endface").innerHTML = 
+                "<img src='https://graph.facebook.com/"
+                + userid 
+                + "/picture?type=large'/>"
+                ;  
+            },
+            
+            onEnd: function( options ) {
+                document.getElementById("endface").innerHTML = 
+                'The End<br />Thanks for Watching '
+                + firstname    
+                ;
+            }
+        });
+    
+      pop.code({
+            start: 2,
+            end: 5,
+            onStart: function( options ) {
+                document.getElementById("popcornbox").innerHTML = 
+                status1 + status2 + status3 + status4 + status5
+                ;
+            },
+            
+            onEnd: function( options ) {
+                document.getElementById("popcornbox").innerHTML = "";
+            }
+        });
+            
+	pop.footnote({
+		start:'1', // Our start time in seconds
+		end:'2', // Our end time in seconds
+		text:"", // The text we want to display
+		target:'popcornbox', // What DOM element we want to target on the page
+	    });
+	    
+/*	pop.image({
+		start:'2', // Our start time in seconds
+		end:'12', // Our end time in seconds
+		src:"http://blog.pinnaclepromotions.com/wp-content/uploads/2009/05/pinnacle-holiday-group-pic1.jpg", // The image we want to display
+		target:'popcornbox', // What DOM element we want to target on the page
+	    });
+*/	        
+
+});
+</script>
+
+</head> 
+<body> 
+<div id="pagecontainer">
+	
+	<h2>Narcissus & Friends</h2>
+	<button id="fb-auth"></button><br /><br />
+	
+	
+<div id="vidcontainer" align="center">
+
+	<div id="popcornbox"></div>
+	<div id="endface"></div>
+	<video id="video" width="800" height="600" controls>
+  			<source src="video/test.webm">
+  			<source src="video/test.mp4">
+	</video>
+</div>
+	
+	<div id="fb-root"></div>
+	<div id="prophoto"></div>
+	<div id="basicinfo"></div>
+	<div id="friendphotos"></div>
+	<div id="liketext"></div>
+	<div id="tagphotos"></div>
+	<div id="newsfeed"></div>
+	<div id="statusupdates"></div>
+
+</div> <!-- closing container div -->
+<script>
+var accessToken;
+
+var d = {};
+var userid;
+var firstname;
+var like1;
+var status1;
+var status2;
+var status3;
+var status4;
+var status5;
+
+//$.getJSON('https://graph.facebook.com/me/friends?access_token=' + d.accessToken, function(data){d.friends = data;});
+// to iterate through for (var i = 0; i < d.friends.data.length; i++) {console.log(d.friends.data[i].name);}
+
+window.fbAsyncInit = function() {
+  FB.init({ appId: '294448483953041', 
+	    status: true, 
+	    cookie: true,
+	    xfbml: true,
+	    oauth: true});
+
+function dropHTML(response) {
+
+			 var profilephoto = document.getElementById('prophoto');
+	      	profilephoto.innerHTML = 
+	      	'<img src="https://graph.facebook.com/'
+	        + d.basic.id + '/picture"/><br />';
+
+	      var userInfo = document.getElementById('basicinfo');
+	      userInfo.innerHTML = 
+	      '<img src="https://graph.facebook.com/'
+	        + d.basic.id + '/picture?type=large"/><br />'
+	        + 'Hey, ' + d.basic.name + '<br />'
+	        + d.basic.email + '<br />'
+	        + d.basic.birthday + '<br />'
+	     //   + d.basic.location.name + '<br />'
+	     //   + d.basic.quotes + '<br />'
+	    //    + d.basic.relationship_status + ' with ' + d.basic.significant_other.name + '<br />'
+	        + '<a href="https://graph.facebook.com/me/friends?access_token=' 
+	        + accessToken
+	        + '">Friend List</a><br />'
+	        + '<a href="https://graph.facebook.com/me/feed?access_token=' 
+	        + accessToken
+	        + '">Personal News Feed</a><br />'
+	        + '<a href="https://graph.facebook.com/me/albums?access_token=' 
+	        + accessToken
+	        + '">Photo Albums</a><br />'
+	        + '<a href="https://graph.facebook.com/me/likes?access_token=' 
+	        + accessToken
+	        + '">Likes</a><br />'
+	        + '<a href="https://graph.facebook.com/me/photos?access_token=' 
+	        + accessToken
+	        + '">Tagged Photos</a><br />'
+	        + '<a href="https://graph.facebook.com/me/statuses?access_token=' 
+	        + accessToken
+	        + '">Status Updates</a><br />'
+			+ '<a href="https://graph.facebook.com/me/home?access_token=' 
+	        + accessToken
+	        + '">Home Feed -- All Content</a><br />'
+	        + '<a href="https://graph.facebook.com/me/posts?access_token=' 
+	        + accessToken
+	        + '">Posts</a><br />'
+			;}
+			
+  function updateButton(response) {
+
+	
+    var button = document.getElementById('fb-auth');
+	
+    if (response.authResponse) {
+    	if (response.authResponse.accessToken) {	
+			accessToken = response.authResponse.accessToken;	
+		}
+		
+    //  var userInfo = document.getElementById('basicinfo');
+      
+      FB.api('/me', function(response) {
+        console.log("updateButton");
+      	console.log(response);
+      	d.basic = response;
+      	userid = d.basic.id; // pass userID into variable
+      	firstname = d.basic.first_name;
+      	
+      
+    	dropHTML(response);
+
+      button.innerHTML = 'Watch and then logout';
+      });
+      button.onclick = function() {
+        FB.logout(function(response) {
+
+          var userInfo = document.getElementById('basicinfo');
+          userInfo.innerHTML="";
+          
+          var profilephoto = document.getElementById('prophoto');
+          profilephoto.innerHTML="";
+          
+	});
+      };
+    } else {
+      //user is not connected to your app or logged out
+      button.innerHTML = 'Login with Facebook';
+      button.onclick = function() {
+      
+        FB.login(function(response) {
+      
+	  if (response.authResponse) {
+
+       	if (response.authResponse.accessToken) {	
+       		console.log(response.authResponse.accessToken);
+			d.accessToken = response.authResponse.accessToken;
+					
+			var userInfo = document.getElementById('basicinfo'); // dropping the basic HTML
+    		userInfo.innerHTML="";
+    		
+    		var profilephoto = document.getElementById('prophoto');
+         	 profilephoto.innerHTML="";   	
+			
+			$.getJSON('https://graph.facebook.com/me/friends?access_token=' + d.accessToken, function(data){
+				console.log("friends");
+				d.friends = data; // Load the user data into d object
+				
+				var friendList = document.getElementById('friendphotos');
+	      		friendList.innerHTML = 
+            	'<img src="https://graph.facebook.com/' 
+	        	+ d.friends.data[12].id + '/picture?type=large"/><br />'
+	        	+ '<img src="https://graph.facebook.com/' 
+	        	+ d.friends.data[20].id + '/picture?type=large"/><br />'
+	        	+ '<img src="https://graph.facebook.com/' 
+	        	+ d.friends.data[50].id + '/picture?type=large"/><br />'
+	        	+ '<img src="https://graph.facebook.com/' 
+	        	+ d.friends.data[100].id + '/picture?type=large"/><br />'
+	        	+ '<img src="https://graph.facebook.com/' 
+	        	+ d.friends.data[5].id + '/picture?type=large"/><br />'
+	    		+ '<img src="https://graph.facebook.com/' 
+	        	+ d.friends.data[1].id + '/picture?type=large"/><br />'
+	        	;
+	        });
+						
+			$.getJSON('https://graph.facebook.com/me/albums?access_token=' + d.accessToken, function(data){
+				console.log("albums");
+				d.albums = data;
+			});
+				
+			$.getJSON('https://graph.facebook.com/me/likes?access_token=' + d.accessToken, function(data){
+				console.log("likes");
+				d.likes = data;
+				like1 = d.likes.data[1].name;
+						
+				var likeList = document.getElementById('liketext');
+  				likeList.innerHTML = 
+  				'Hey, your likes: ' + d.likes.data[1].name + ', ' + d.likes.data[2].name + ', ' + d.likes.data[3].name + '<br />'
+	      		;
+			});
+						
+			$.getJSON('https://graph.facebook.com/me/photos?access_token=' + d.accessToken, function(data){
+				console.log("photos");
+				d.photos = data;
+					
+				var tagPhotos = document.getElementById('tagphotos');
+				tagPhotos.innerHTML = 
+				'<img src=' 
+				+ d.photos.data[2].source
+				+'/><br />'
+				+'<img src=' 
+	      		+ d.photos.data[3].source
+				+'/><br />'
+				+'<img src=' 
+				+ d.photos.data[4].source
+				+'/><br />'
+				;					
+			});
+			
+			$.getJSON('https://graph.facebook.com/me/feed?access_token=' + d.accessToken, function(data){
+				console.log("newsfeed");
+				d.newsfeed = data;
+				// there is no consistent naming for news feed
+				var newsfeed = document.getElementById('newsfeed');
+  				newsfeed.innerHTML = 
+  				'Stuff from your News Feed: ' 
+  				+ d.newsfeed.data[0].story + d.newsfeed.data[1].story + d.newsfeed.data[2].story
+  				+ '<br />'
+	      		;
+				
+			});
+			
+			$.getJSON('https://graph.facebook.com/me/statuses?access_token=' + d.accessToken, function(data){
+				console.log("statuses");
+				d.statusupdates = data;
+				status1 = d.statusupdates.data[0].message;
+				status2 = d.statusupdates.data[1].message;
+				status3 = d.statusupdates.data[2].message;
+				status4 = d.statusupdates.data[3].message;
+				status5 = d.statusupdates.data[4].message;
+				
+				var statusupdates = document.getElementById('statusupdates');
+  				statusupdates.innerHTML = 
+  				'Your status updates: ' 
+  				+ d.statusupdates.data[0].message 
+  				+ '<br />'
+  				+ d.statusupdates.data[1].message
+  				+ '<br />'
+  				+ d.statusupdates.data[2].message
+  				+ '<br />'
+  				+ d.statusupdates.data[3].message
+  				+ '<br />'
+  				+ d.statusupdates.data[4].message
+  				+ '<br />'
+  				+ d.statusupdates.data[5].message
+  				+ '<br />'
+  				+ d.statusupdates.data[6].message
+  				+ '<br />'
+  				+ d.statusupdates.data[7].message
+  				+ '<br />'
+	      		;
+				
+			});
+		}
+     FB.api('/me', function(response) {
+	//	dropHTML(response);
+		});	   
+    } else {
+            //user cancelled login or did not grant authorization
+    	}
+    }, {scope:'user_location,user_status,user_website,user_photos,read_stream,user_likes,user_religion_politics,user_work_history,user_relationships,read_friendlists,email,user_about_me,user_birthday,user_hometown'});  	
+      }
+    }
+  }
+
+  // run once with current status and whenever the status changes
+  FB.getLoginStatus(updateButton);
+  FB.Event.subscribe('auth.statusChange', updateButton);	
+  
+};
+	
+(function() {
+  var e = document.createElement('script'); e.async = true;
+  e.src = document.location.protocol 
+    + '//connect.facebook.net/en_US/all.js';
+  document.getElementById('fb-root').appendChild(e);
+}());
+
+</script>
+
+
+
+</body> 
+</html>

@@ -1,0 +1,111 @@
+body {
+background-image:url('http://itp.nyu.edu/~pg1035/images/background.png');
+}
+
+#pagecontainer {
+position: relative;
+width: 80%;
+margin: 20px auto;
+padding: 20px 20px 20px 20px;
+background-color: white;
+-webkit-border-radius: 9px;
+-moz-border-radius: 9px;
+border-radius: 9px; 
+-webkit-box-shadow: 0 5px 15px rgba(0,0,0,.2);
+-moz-box-shadow: 0 5px 15px rgba(0,0,0,.2);
+box-shadow: 0 5px 15px rgba(0,0,0,.2);
+}
+
+#fb-auth {
+margin-left: 40%;
+margin-right: auto;
+text-align: center;
+font-weight: bold;
+font-size: 12px;
+color: white;
+padding: 10px 10px 10px 10px;
+cursor: pointer;
+background: url(http://www.timelinemoviemaker.com/static/images/green_btn_up_bkg.png);
+}
+
+
+h2 {
+text-align: center; 
+font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+font-size: 20px;
+}
+p {
+	color: white;
+	font-size: 20px;
+}
+a {
+	color: blue;
+	font-size: 20px;
+}
+
+#video {
+margin-left: auto;
+margin-right: auto;
+margin-top: 1px;
+position: relative;
+}
+
+#endface {
+opacity: 0.5;
+text-align: center; 
+font-size: 30px;
+font-family: Helvetica, Arial, sans-serif;
+font-weight:normal;
+margin-top: 0px;
+margin-left: 30px;
+position: relative;
+z-index: 99999;
+width: 480px;
+height: 0px;
+}
+
+#popcornbox {
+background: red;
+font-family: Helvetica, Arial, sans-serif;
+margin-top: 0px;
+margin-left: 20px;
+position: relative;
+z-index: 99999;
+width: 480px;
+height: 0px;
+animation:fadein 30s;
+-moz-animation:fadein 30s; /* Firefox */
+-webkit-animation:fadein 30s; /* Safari and Chrome */
+}
+
+@keyframes fadein
+{
+0%   {opacity: 0.7; background:red;}
+25%   {opacity: 0.01; background:yellow;}
+50%	 {opacity: 0.7; background:blue;}
+75%   {opacity: 0.01; background:green;}
+100% {opacity: 0.7; background:red;}
+}
+
+@-moz-keyframes fadein /* Firefox */
+{
+	0%   {opacity: 0.7; background:red;}
+	25%   {opacity: 0.01; background:yellow;}
+	50%	 {opacity: 0.7; background:blue;}
+	75%   {opacity: 0.01; background:green;}
+	100% {opacity: 0.7; background:red;}
+}
+
+@-webkit-keyframes fadein /* Safari and Chrome */
+{
+	0%   {opacity: 0.7; background:red;}
+	25%   {opacity: 0.01; background:yellow;}
+	50%	 {opacity: 0.7; background:blue;}
+	75%   {opacity: 0.01; background:green;}
+	100% {opacity: 0.7; background:red;}
+}
+
+#videocontainer {
+position: relative;
+
+}
