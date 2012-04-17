@@ -18,19 +18,34 @@
 	var status3;
 	var status4;
 	var status5;
+	var friend1;
+	var friend2;
+	var friend3;
+	var friend4;
+	var friend5;
 
 	document.addEventListener("DOMContentLoaded", function () {
     var pop = Popcorn("#video");
     
      pop.code({
-            start: 5,
-            end: 10,
+            start: 3,
+            end: 7,
             onStart: function( options ) {
                 document.getElementById("endface").innerHTML = 
                 "<img src='https://graph.facebook.com/"
                 + userid 
                 + "/picture?type=large'/>"
                 ;  
+                
+                // Animation for Profile Photo
+  				$("#endface").animate({
+    				width: "+=300px",
+    				height: "+=300px",
+    				opacity: 0.6,
+   			
+    				fontSize: "3em",
+    				
+  					}, 5000 );
             },
             
             onEnd: function( options ) {
@@ -39,30 +54,72 @@
                 + firstname    
                 ;
             }
+            
+            
         });
     
       pop.code({
-            start: 2,
+            start: 1,
             end: 5,
             onStart: function( options ) {
                 document.getElementById("popcornbox").innerHTML = 
                 status1 + status2 + status3 + status4 + status5
                 ;
+                
+            // Animation for Status Updates
+  				$("#popcornbox").animate({
+    				width: "400px",
+    				height: "200px",
+    				opacity: 0.7,
+   					marginLeft: "0.6in",
+    				fontSize: "60px",
+    				
+  					}, 5000 );
+
             },
             
             onEnd: function( options ) {
                 document.getElementById("popcornbox").innerHTML = "";
             }
         });
+        
+            pop.code({
+            start: 7,
+            end: 10,
+            onStart: function( options ) {
+            	console.log("friend1 fired");
+                document.getElementById("friend1div").innerHTML = 
+                "<img src='https://graph.facebook.com/"
+                + friend1 
+                + "/picture'/>"
+                ;  
+                
+                // Animation for Profile Photo
+  				$("#friend1").animate({
+    				// width: "100px",
+    				// height: "100px",
+    				marginLeft: "0.6in",
+    				opacity: 0.6,
+    				
+  					}, 5000 );
+            },
             
-	pop.footnote({
+            onEnd: function( options ) {
+                document.getElementById("friend1").innerHTML = ""  
+                ;
+            }
+            
+            
+        });
+            
+/*	pop.footnote({
 		start:'1', // Our start time in seconds
 		end:'2', // Our end time in seconds
 		text:"", // The text we want to display
 		target:'popcornbox', // What DOM element we want to target on the page
 	    });
 	    
-/*	pop.image({
+	pop.image({
 		start:'2', // Our start time in seconds
 		end:'12', // Our end time in seconds
 		src:"http://blog.pinnaclepromotions.com/wp-content/uploads/2009/05/pinnacle-holiday-group-pic1.jpg", // The image we want to display
@@ -99,6 +156,13 @@
 	<div id="tagphotos"></div>
 	<div id="newsfeed"></div>
 	<div id="statusupdates"></div>
+	<div id="status1"></div>
+	<div id="status2"></div>
+	<div id="status3"></div>
+	<div id="status4"></div>
+	<div id="status5"></div>
+	<div id="friend1div"></div>
+
 
 </div> <!-- closing container div -->
 <script>
@@ -113,6 +177,12 @@ var status2;
 var status3;
 var status4;
 var status5;
+var friend1;
+var friend2;
+var friend3;
+var friend4;
+var friend5;
+
 
 //$.getJSON('https://graph.facebook.com/me/friends?access_token=' + d.accessToken, function(data){d.friends = data;});
 // to iterate through for (var i = 0; i < d.friends.data.length; i++) {console.log(d.friends.data[i].name);}
@@ -224,6 +294,11 @@ function dropHTML(response) {
 			$.getJSON('https://graph.facebook.com/me/friends?access_token=' + d.accessToken, function(data){
 				console.log("friends");
 				d.friends = data; // Load the user data into d object
+				friend1 = d.friends.data[100].id;
+				friend2 = d.friends.data[50].id;
+				friend3 = d.friends.data[25].id;
+				friend4 = d.friends.data[10].id;
+				friend5 = d.friends.data[200].id;
 				
 				var friendList = document.getElementById('friendphotos');
 	      		friendList.innerHTML = 
